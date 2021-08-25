@@ -11,7 +11,7 @@ function Permissions() {
     this.ACCESS_SURFACE_FLINGER = 'android.permission.ACCESS_SURFACE_FLINGER';
     this.ACCESS_WIFI_STATE = 'android.permission.ACCESS_WIFI_STATE';
     this.ACCOUNT_MANAGER = 'android.permission.ACCOUNT_MANAGER';
-    this.ACTIVITY_RECOGNITION  = 'android.permission.ACTIVITY_RECOGNITION ';
+    this.ACTIVITY_RECOGNITION = 'android.permission.ACTIVITY_RECOGNITION ';
     this.ADD_VOICEMAIL = 'com.android.voicemail.permission.ADD_VOICEMAIL';
     this.AUTHENTICATE_ACCOUNTS = 'android.permission.AUTHENTICATE_ACCOUNTS';
     this.BATTERY_STATS = 'android.permission.BATTERY_STATS';
@@ -155,18 +155,19 @@ function Permissions() {
     this.WRITE_SYNC_SETTINGS = 'android.permission.WRITE_SYNC_SETTINGS';
     this.WRITE_USER_DICTIONARY = 'android.permission.WRITE_USER_DICTIONARY';
     this.WRITE_VOICEMAIL = 'com.android.voicemail.permission.WRITE_VOICEMAIL';
+    this.ACCESS_BACKGROUND_LOCATION = 'android.permission.ACCESS_BACKGROUND_LOCATION';
 }
 
 function deprecated(name) {
-  console.warn("Calling cordova.plugins.permissions." + name + " with the successCallback as first argument is deprecated");
-  console.warn("The new signature is '" + name + "(permission, successCallback, errorCallback)'");
+    console.warn("Calling cordova.plugins.permissions." + name + " with the successCallback as first argument is deprecated");
+    console.warn("The new signature is '" + name + "(permission, successCallback, errorCallback)'");
 }
 
 Permissions.prototype = {
-    checkPermission: function(permission, successCallback, errorCallback) {
+    checkPermission: function (permission, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, permissionsName, 'checkPermission', [permission]);
     },
-    requestPermission: function(permission, successCallback, errorCallback) {
+    requestPermission: function (permission, successCallback, errorCallback) {
         if (typeof permission === "function") {
             deprecated("requestPermission");
             successCallback = arguments[0];
@@ -175,7 +176,7 @@ Permissions.prototype = {
         }
         cordova.exec(successCallback, errorCallback, permissionsName, 'requestPermission', [permission]);
     },
-    requestPermissions: function(permissions, successCallback, errorCallback) {
+    requestPermissions: function (permissions, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, permissionsName, 'requestPermissions', permissions);
     }
 };
