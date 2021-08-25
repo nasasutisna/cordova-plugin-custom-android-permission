@@ -13,6 +13,8 @@ import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import static android.Manifest.permission.ACCESS_BACKGROUND_LOCATION;
 
 /**
  * Created by JasonYang on 2016/3/11.
@@ -33,6 +35,7 @@ public class Permissions extends CordovaPlugin {
     private static final String KEY_RESULT_PERMISSION = "hasPermission";
 
     private CallbackContext permissionsCallback;
+    private volatile boolean bgLocationGranted;
 
     @Override
     public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -109,7 +112,14 @@ public class Permissions extends CordovaPlugin {
                 Context context = this.cordova.getActivity().getApplicationContext();
                 addProperty(returnObj, KEY_RESULT_PERMISSION, Settings.canDrawOverlays(context));
             } else {
-                addProperty(returnObj, KEY_RESULT_PERMISSION, cordova.hasPermission(permission0));
+                if(permission0 == "ACCESS_BACKGROUND_LOCATION") {
+                    Context context = this.cordova.getActivity().getApplicationContext();
+                    bgLocationGranted = context.checkSelfPermission(ACCESS_BACKGROUND_LOCATION) == PERMISSION_GRANTED;
+                    addProperty(returnObj, KEY_RESULT_PERMISSION + "-ACCESS_BACKGROUND_LOCATION" , bgLocationGranted);
+                } else {
+                    addProperty(returnObj, KEY_RESULT_PERMISSION, cordova.hasPermission(permission0));
+                }
+              
             }
             callbackContext.success(returnObj);
         }
