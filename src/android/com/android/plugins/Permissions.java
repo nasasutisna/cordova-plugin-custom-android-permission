@@ -112,7 +112,7 @@ public class Permissions extends CordovaPlugin {
                 Context context = this.cordova.getActivity().getApplicationContext();
                 addProperty(returnObj, KEY_RESULT_PERMISSION, Settings.canDrawOverlays(context));
             } else {
-                if(permission0 == "ACCESS_BACKGROUND_LOCATION") {
+                if(permission0 == "android.permission.ACCESS_FINE_LOCATION") {
                     Context context = this.cordova.getActivity().getApplicationContext();
                     bgLocationGranted = context.checkSelfPermission(ACCESS_BACKGROUND_LOCATION) == PERMISSION_GRANTED;
                     addProperty(returnObj, KEY_RESULT_PERMISSION + "-ACCESS_BACKGROUND_LOCATION" , bgLocationGranted);
